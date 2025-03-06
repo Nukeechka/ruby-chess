@@ -12,7 +12,7 @@ class Coordinates
   def ==(other)
     other.is_a?(self.class) &&
       other.file == @file &&
-      other.title == @title
+      other.rank == @rank
   end
 
   alias eql? ==

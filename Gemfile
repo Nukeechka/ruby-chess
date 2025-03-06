@@ -7,3 +7,5 @@ source 'https://rubygems.org'
 gem 'rubocop', '~> 1.73'
 
 gem 'rainbow', '~> 3.1'
+
+gem "colorize", "~> 1.1"
