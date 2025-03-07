@@ -23,6 +23,8 @@ class BoardRenderer
     end
   end
 
+  private
+
   def colorize_sprite(sprite, piece_color, square_dark) # rubocop:disable Metrics/MethodLength
     result = sprite
     result = if piece_color == 'white'
@@ -42,7 +44,21 @@ class BoardRenderer
     colorize_sprite('   ', 'white', Board.square_dark?(coordinates))
   end
 
+  def select_sprite_for_piece(piece)
+    pieces_list = {
+      'Pawn' => '♙',
+      'Knight' => '♞',
+      'Rook' => '♜',
+      'Bishop' => '♝',
+      'Queen' => '♛',
+      'King' => '♚'
+    }
+    return pieces_list[piece.class.name] if pieces_list.include?(piece.class.name)
+
+    ''
+  end
+
   def sprite_for_piece(piece)
-    colorize_sprite(' A ', piece.color, Board.square_dark?(piece.coordinates))
+    colorize_sprite(' ' + select_sprite_for_piece(piece) + ' ', piece.color, Board.square_dark?(piece.coordinates))
   end
 end
