@@ -47,11 +47,11 @@ class BoardRenderer
   def select_sprite_for_piece(piece)
     pieces_list = {
       'Pawn' => '♙',
-      'Knight' => '♞',
-      'Rook' => '♜',
-      'Bishop' => '♝',
-      'Queen' => '♛',
-      'King' => '♚'
+      'Knight' => '♘',
+      'Rook' => '♖',
+      'Bishop' => '♗',
+      'Queen' => '♕',
+      'King' => '♔'
     }
     return pieces_list[piece.class.name] if pieces_list.include?(piece.class.name)
 
@@ -59,6 +59,6 @@ class BoardRenderer
   end
 
   def sprite_for_piece(piece)
-    colorize_sprite(' ' + select_sprite_for_piece(piece) + ' ', piece.color, Board.square_dark?(piece.coordinates))
+    colorize_sprite(" #{select_sprite_for_piece(piece)} ", piece.color, Board.square_dark?(piece.coordinates))
   end
 end

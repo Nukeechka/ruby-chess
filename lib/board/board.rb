@@ -2,6 +2,11 @@
 
 require_relative '../internal/coordinates'
 require_relative '../pieces/pawn'
+require_relative '../pieces/rook'
+require_relative '../pieces/knight'
+require_relative '../pieces/bishop'
+require_relative '../pieces/queen'
+require_relative '../pieces/king'
 
 # class Board
 class Board
@@ -17,11 +22,38 @@ class Board
     @pieces[coordinates] = piece
   end
 
-  def set_default_pieces_position
+  def set_default_pieces_position # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # set Pawns
     (1..8).reverse_each do |file|
       set_piece(Coordinates.new(file, 7), Pawn.new('black', Coordinates.new(file, 7)))
       set_piece(Coordinates.new(file, 2), Pawn.new('white', Coordinates.new(file, 2)))
     end
+
+    # set Rooks
+    set_piece(Coordinates.new(1, 8), Rook.new('black', Coordinates.new(1, 8)))
+    set_piece(Coordinates.new(8, 8), Rook.new('black', Coordinates.new(8, 8)))
+    set_piece(Coordinates.new(1, 1), Rook.new('white', Coordinates.new(1, 1)))
+    set_piece(Coordinates.new(8, 1), Rook.new('white', Coordinates.new(8, 1)))
+
+    # set Knights
+    set_piece(Coordinates.new(2, 8), Knight.new('black', Coordinates.new(2, 8)))
+    set_piece(Coordinates.new(7, 8), Knight.new('black', Coordinates.new(7, 8)))
+    set_piece(Coordinates.new(2, 1), Knight.new('white', Coordinates.new(2, 1)))
+    set_piece(Coordinates.new(7, 1), Knight.new('white', Coordinates.new(7, 1)))
+
+    # set Bishops
+    set_piece(Coordinates.new(6, 1), Bishop.new('white', Coordinates.new(6, 1)))
+    set_piece(Coordinates.new(3, 1), Bishop.new('white', Coordinates.new(3, 1)))
+    set_piece(Coordinates.new(6, 8), Bishop.new('black', Coordinates.new(6, 8)))
+    set_piece(Coordinates.new(3, 8), Bishop.new('black', Coordinates.new(3, 8)))
+
+    # set Queens
+    set_piece(Coordinates.new(4, 8), Queen.new('black', Coordinates.new(4, 8)))
+    set_piece(Coordinates.new(4, 1), Queen.new('white', Coordinates.new(4, 1)))
+
+    # set Kings
+    set_piece(Coordinates.new(5, 8), King.new('black', Coordinates.new(5, 8)))
+    set_piece(Coordinates.new(5, 1), King.new('white', Coordinates.new(5, 1)))
   end
 
   def square_empty?(coordinates)
