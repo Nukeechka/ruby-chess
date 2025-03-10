@@ -1,12 +1,22 @@
 # frozen_string_literal: true
 
-# class Knight
-class Knight
-  attr_reader :color
-  attr_accessor :coordinates
+require_relative '../internal/coordinates_shift'
 
-  def initialize(color, coordinates)
-    @color = color
-    @coordinates = coordinates
+# class Knight
+class Knight < Piece
+  def get_piece_moves # rubocop:disable Naming/AccessorMethodName
+    [
+      CoordinatesShift.new(1, 2),
+      CoordinatesShift.new(2, 1),
+
+      CoordinatesShift.new(1, -2),
+      CoordinatesShift.new(2, -1),
+
+      CoordinatesShift.new(-2, 1),
+      CoordinatesShift.new(-1, 2),
+
+      CoordinatesShift.new(-2, -1),
+      CoordinatesShift.new(-1, -2)
+    ]
   end
 end

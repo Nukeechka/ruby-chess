@@ -15,7 +15,7 @@ class Coordinates
 
   def can_shift?(shifts)
     f = @file + shifts.file_shift
-    shift.rank_shift
+    r = @rank + shifts.rank_shift
 
     return false if f <= 0 || f > 8
     return false if r <= 0 || r > 8
