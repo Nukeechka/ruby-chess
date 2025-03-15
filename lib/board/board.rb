@@ -22,6 +22,16 @@ class Board
     @pieces[coordinates] = piece
   end
 
+  def remove_piece(coordinates)
+    @pieces.delete(coordinates)
+  end
+
+  def move_piece(from, to)
+    piece = get_piece(from)
+    remove_piece(from)
+    set_piece(to, piece)
+  end
+
   def set_default_pieces_position # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     # set Pawns
     (1..8).reverse_each do |file|
