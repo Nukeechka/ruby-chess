@@ -17,7 +17,7 @@ class Game
     is_white_to_move = true
 
     loop do
-      @renderer.render(@board)
+      @renderer.render(@board, nil)
       if is_white_to_move
         puts 'White to move'
       else
@@ -26,6 +26,7 @@ class Game
       source_coordinates = @input_coordinates.input_piece_coordinates_for_color(is_white_to_move ? 'white' : 'black',
                                                                                 board)
       piece = board.get_piece(source_coordinates)
+      @renderer.render(@board, piece)
       available_squares = piece.get_available_move_squares(board)
       target_coordinates = @input_coordinates.input_available_square(available_squares)
       board.move_piece(source_coordinates, target_coordinates)

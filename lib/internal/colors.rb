@@ -7,4 +7,5 @@ module AnsiColors
   BLACK_PIECE = "\u001B[34m"
   WHITE_SQUARE = "\u001B[47m"
   BLACK_SQUARE = "\u001B[0;100m"
+  HIGHLIGHTED_SQUARE = "\u001B[0;45m"
 end

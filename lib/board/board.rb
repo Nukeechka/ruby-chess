@@ -13,7 +13,6 @@ class Board
   attr_reader :pieces
 
   def initialize
-    # @pieces = Array.new(8) { Array.new(8, '*') }
     @pieces = {}
   end
 
