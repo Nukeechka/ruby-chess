@@ -20,10 +20,14 @@ class Rook < Piece
     result
   end
 
-  def square_available_for_move?(coordinates, board)
+  def square_available_for_move?(coordinates, board) # rubocop:disable Metrics/MethodLength
     result = super(coordinates, board)
     if result
-      coordinates_between = line_coordinates_between(@coordinates, coordinates)
+      coordinates_between = if @coordinates.file == coordinates.file
+                              vertical_coordinates_between(@coordinates, coordinates)
+                            else
+                              horizontal_coordinates_between(@coordinates, coordinates)
+                            end
       coordinates_between.each do |coordinate|
         return false unless board.square_empty?(coordinate)
       end
