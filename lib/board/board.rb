@@ -73,7 +73,28 @@ class Board
     @pieces.fetch(coordinates)
   end
 
+  def get_pieces_by_color(color)
+    result = []
+    @pieces.each_value do |piece|
+      result.push(piece) if piece.color == color
+    end
+    result
+  end
+
   def self.square_dark?(coordinates)
     (((coordinates.rank + 1) + coordinates.file) % 2).zero?
+  end
+
+  def square_attacked(coordinates, color)
+    squares_attacked = []
+    opposite_pieces = get_pieces_by_color(color)
+    opposite_pieces.each do |piece|
+      if piece.instance_of? Pawn
+        squares_attacked.concat(piece.get_attack_move_squares)
+      else
+        squares_attacked.concat(piece.get_available_move_squares(self))
+      end
+    end
+    squares_attacked.include?(coordinates)
   end
 end

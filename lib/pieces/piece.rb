@@ -25,6 +25,12 @@ class Piece
     board.square_empty?(coordinates) || board.get_piece(coordinates).color != @color
   end
 
+  def opposite_color
+    return 'black' if color == 'white'
+
+    'white'
+  end
+
   def get_piece_moves # rubocop:disable Naming/AccessorMethodName
     p 'Abstract method'
   end
