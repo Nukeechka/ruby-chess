@@ -2,6 +2,7 @@
 
 require_relative './file_chars'
 require_relative './coordinates'
+require_relative './move'
 
 # class InputCoordinates
 class InputCoordinates
@@ -72,5 +73,14 @@ class InputCoordinates
       end
       return coordinates
     end
+  end
+
+  def input_move(board, color, renderer)
+    source_coordinates = input_piece_coordinates_for_color(color, board)
+    piece = board.get_piece(source_coordinates)
+    renderer.render(board, piece)
+    available_squares = piece.get_available_move_squares(board)
+    target_coordinates = input_available_square(available_squares)
+    Move.new(source_coordinates, target_coordinates)
   end
 end

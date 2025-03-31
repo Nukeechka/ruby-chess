@@ -25,10 +25,10 @@ class Board
     @pieces.delete(coordinates)
   end
 
-  def move_piece(from, to)
-    piece = get_piece(from)
-    remove_piece(from)
-    set_piece(to, piece)
+  def move_piece(move)
+    piece = get_piece(move.from)
+    remove_piece(move.from)
+    set_piece(move.to, piece)
   end
 
   def set_default_pieces_position # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

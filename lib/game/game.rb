@@ -23,13 +23,9 @@ class Game
       else
         puts 'Black to move'
       end
-      source_coordinates = @input_coordinates.input_piece_coordinates_for_color(is_white_to_move ? 'white' : 'black',
-                                                                                board)
-      piece = board.get_piece(source_coordinates)
-      @renderer.render(@board, piece)
-      available_squares = piece.get_available_move_squares(board)
-      target_coordinates = @input_coordinates.input_available_square(available_squares)
-      board.move_piece(source_coordinates, target_coordinates)
+      color_to_move = is_white_to_move ? 'white' : 'black'
+      move = @input_coordinates.input_move(@board, color_to_move, @renderer)
+      board.move_piece(move)
       is_white_to_move = !is_white_to_move
     end
   end
