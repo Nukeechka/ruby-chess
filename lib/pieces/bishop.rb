@@ -23,6 +23,15 @@ class Bishop < Piece
   def square_available_for_move?(coordinates, board)
     result = super(coordinates, board)
     if result
+      square_available_for_attack?(coordinates, board)
+    elsif !result
+      false
+    end
+  end
+
+  def square_available_for_attack?(coordinates, board)
+    result = super(coordinates, board)
+    if result
       coordinates_between = diagonal_coordinates_between(@coordinates, coordinates)
       coordinates_between.each do |coordinate|
         return false unless board.square_empty?(coordinate)

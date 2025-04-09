@@ -75,12 +75,28 @@ class InputCoordinates
     end
   end
 
-  def input_move(board, color, renderer)
-    source_coordinates = input_piece_coordinates_for_color(color, board)
-    piece = board.get_piece(source_coordinates)
-    renderer.render(board, piece)
-    available_squares = piece.get_available_move_squares(board)
-    target_coordinates = input_available_square(available_squares)
-    Move.new(source_coordinates, target_coordinates)
+  def king_in_check_after_move?(board, color, move)
+    copy = BoardFactory.new.copy_board(board)
+    copy.move_piece(move)
+    king = copy.get_pieces_by_color(color).find do |piece|
+      piece.instance_of?(::King)
+    end
+    copy.square_attacked(king.coordinates, king.opposite_color)
+  end
+
+  def input_move(board, color, renderer) # rubocop:disable Metrics/MethodLength
+    loop do
+      source_coordinates = input_piece_coordinates_for_color(color, board)
+      piece = board.get_piece(source_coordinates)
+      renderer.render(board, piece)
+      available_squares = piece.get_available_move_squares(board)
+      target_coordinates = input_available_square(available_squares)
+      move = Move.new(source_coordinates, target_coordinates)
+      if king_in_check_after_move?(board, color, move)
+        puts 'Your king is under attack!'
+        next
+      end
+      return move
+    end
   end
 end

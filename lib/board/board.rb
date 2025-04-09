@@ -10,10 +10,12 @@ require_relative '../pieces/king'
 
 # class Board
 class Board
-  attr_reader :pieces
+  attr_reader :pieces, :fen, :moves
 
-  def initialize
+  def initialize(fen)
     @pieces = {}
+    @fen = fen
+    @moves = []
   end
 
   def set_piece(coordinates, piece)
@@ -29,6 +31,7 @@ class Board
     piece = get_piece(move.from)
     remove_piece(move.from)
     set_piece(move.to, piece)
+    @moves.push(move)
   end
 
   def set_default_pieces_position # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -86,15 +89,11 @@ class Board
   end
 
   def square_attacked(coordinates, color)
-    squares_attacked = []
     opposite_pieces = get_pieces_by_color(color)
     opposite_pieces.each do |piece|
-      if piece.instance_of? Pawn
-        squares_attacked.concat(piece.get_attack_move_squares)
-      else
-        squares_attacked.concat(piece.get_available_move_squares(self))
-      end
+      attacked_squares = piece.get_attacked_squares(self)
+      return true if attacked_squares.include?(coordinates)
     end
-    squares_attacked.include?(coordinates)
+    false
   end
 end

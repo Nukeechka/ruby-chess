@@ -22,7 +22,16 @@ class Queen < Piece
     result
   end
 
-  def square_available_for_move?(coordinates, board) # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity
+  def square_available_for_move?(coordinates, board)
+    result = super(coordinates, board)
+    if result
+      square_available_for_attack?(coordinates, board)
+    elsif !result
+      false
+    end
+  end
+
+  def square_available_for_attack?(coordinates, board) # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity
     result = super(coordinates, board)
     if result
       coordinates_between = if @coordinates.file == coordinates.file
@@ -37,8 +46,7 @@ class Queen < Piece
         return false unless board.square_empty?(coordinate)
       end
     elsif !result
-      return false
+      false
     end
-    true
   end
 end

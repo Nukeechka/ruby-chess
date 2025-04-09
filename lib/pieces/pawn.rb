@@ -21,17 +21,6 @@ class Pawn < Piece
     end
   end
 
-  def get_attack_move_squares
-    result = []
-    get_piece_attacks.each do |shift|
-      next unless @coordinates.can_shift?(shift)
-
-      new_coordinates = @coordinates.shift(shift)
-      result.push(new_coordinates)
-    end
-    result
-  end
-
   def get_piece_attacks # rubocop:disable Naming/AccessorMethodName
     result = []
     if @color == 'white'

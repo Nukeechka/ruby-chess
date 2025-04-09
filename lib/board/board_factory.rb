@@ -8,7 +8,6 @@ require_relative '../pieces/piece_factory'
 # class BoardFactory
 class BoardFactory
   def initialize
-    @board = Board.new
     @piece_factory = PieceFactory.new
   end
 
@@ -16,6 +15,7 @@ class BoardFactory
 
   def board_from_fen(fen) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     parts = fen.split(' ')
+    board = Board.new(fen)
     piece_positioins = parts[0]
     fen_rows = piece_positioins.split('/')
     fen_rows.each_with_index do |row, index|
@@ -26,12 +26,21 @@ class BoardFactory
           file_index += fen_char.to_i
         else
           coordinates = Coordinates.new(file_index, rank)
-          @board.set_piece(coordinates, @piece_factory.from_fen_char(fen_char, coordinates))
+          board.set_piece(coordinates, @piece_factory.from_fen_char(fen_char, coordinates))
           file_index += 1
         end
       end
     end
-    @board
+    board
+  end
+
+  def copy_board(source)
+    clone = board_from_fen(source.fen)
+    source.moves.each do |move|
+      clone.move_piece(move)
+    end
+
+    clone
   end
 
   def digit?(value)
