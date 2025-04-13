@@ -34,12 +34,11 @@ class Pawn < Piece
 
   def square_available_for_move?(coordinates, board)
     if @coordinates.file == coordinates.file
-      return board.square_empty?(coordinates) if (coordinates.rank - @coordinates.rank).abs == 1
+      rank_shift = @coordinates.rank - coordinates.rank.abs
+      return board.square_empty?(coordinates) unless rank_shift == 2
 
       coordinates_between = vertical_coordinates_between(@coordinates, coordinates)
-      coordinates_between.each do |coordinate|
-        return false unless board.square_empty?(coordinate)
-      end
+      board.square_empty?(coordinates_between[0]) && board.square_empty?(coordinates)
 
     else
       return false if board.square_empty?(coordinates)
